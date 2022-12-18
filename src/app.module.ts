@@ -2,18 +2,14 @@ import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { AgroinsumosModule } from './balanza/agroinsumos/agroinsumos.module';
 import { AgroinsumosModule } from './agroinsumos/agroinsumos.module';
 import { BalanzaModule } from './balanza/balanza.module';
 import { CamarasModule } from './camaras/camaras.module';
 import { TallerModule } from './taller/taller.module';
 import { HangarOficinaModule } from './hangar-oficina/hangar-oficina.module';
 import { HangarModule } from './hangar/hangar.module';
-import { HangarModule } from './hangar/hangar.module';
 import { ExAgroinsumosModule } from './ex-agroinsumos/ex-agroinsumos.module';
 import { CasaPrincipalModule } from './casa-principal/casa-principal.module';
-import { CamarasModule } from './camaras/camaras.module';
-import { CamarasModule } from './camaras/camaras.module';
 
 @Module({
   imports: [
