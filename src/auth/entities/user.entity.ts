@@ -1,7 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserTeam } from '../interfaces/index';
+import { Agroinsumo } from '../../agroinsumos/entities/agroinsumo.entity';
+import { Balanza } from '../../balanza/entities/balanza.entity';
+import { Camara } from '../../camaras/entities/camara.entity';
+import { CasaPrincipal } from '../../casa-principal/entities/casa-principal.entity';
+import { ExAgroinsumo } from '../../ex-agroinsumos/entities/ex-agroinsumo.entity';
+import { Hangar } from '../../hangar/entities/hangar.entity';
+import { HangarOficina } from '../../hangar-oficina/entities/hangar-oficina.entity';
+import { Taller } from '../../taller/entities/taller.entity';
 
 @Entity()
 export class User {
@@ -34,6 +48,30 @@ export class User {
   })
   @ApiProperty()
   team: 'Microinformatica' | 'Telecomunicaciones';
+
+  @OneToMany(() => Agroinsumo, (agroinsumo) => agroinsumo.user)
+  agroinsumo: Agroinsumo;
+
+  @OneToMany(() => Balanza, (balanza) => balanza.user)
+  balanza: Balanza;
+
+  @OneToMany(() => Camara, (camara) => camara.user)
+  camara: Camara;
+
+  @OneToMany(() => CasaPrincipal, (casaPrincipal) => casaPrincipal.user)
+  casaPrincipal: CasaPrincipal;
+
+  @OneToMany(() => ExAgroinsumo, (exAgroinsumo) => exAgroinsumo.user)
+  exAgroinsumo: ExAgroinsumo;
+
+  @OneToMany(() => Hangar, (hangar) => hangar.user)
+  hangar: Hangar;
+
+  @OneToMany(() => HangarOficina, (hangarOficina) => hangarOficina.user)
+  hangarOficina: HangarOficina;
+
+  @OneToMany(() => Taller, (taller) => taller.user)
+  taller: Taller;
 
   @BeforeInsert()
   hashPassword() {
