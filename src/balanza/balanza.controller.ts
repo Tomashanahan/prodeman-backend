@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BalanzaService } from './balanza.service';
 import { CreateBalanzaDto } from './dto/create-balanza.dto';
 import { UpdateBalanzaDto } from './dto/update-balanza.dto';
 
+@ApiTags('Balanza')
 @Controller('balanza')
 export class BalanzaController {
   constructor(private readonly balanzaService: BalanzaService) {}

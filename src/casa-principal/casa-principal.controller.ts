@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CasaPrincipalService } from './casa-principal.service';
 import { CreateCasaPrincipalDto } from './dto/create-casa-principal.dto';
 import { UpdateCasaPrincipalDto } from './dto/update-casa-principal.dto';
 
+@ApiTags('Casa principal')
 @Controller('casa-principal')
 export class CasaPrincipalController {
   constructor(private readonly casaPrincipalService: CasaPrincipalService) {}
@@ -23,7 +33,10 @@ export class CasaPrincipalController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCasaPrincipalDto: UpdateCasaPrincipalDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCasaPrincipalDto: UpdateCasaPrincipalDto,
+  ) {
     return this.casaPrincipalService.update(+id, updateCasaPrincipalDto);
   }
 

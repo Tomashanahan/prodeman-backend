@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HangarService } from './hangar.service';
 import { CreateHangarDto } from './dto/create-hangar.dto';
 import { UpdateHangarDto } from './dto/update-hangar.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Hangar')
 @Controller('hangar')
 export class HangarController {
   constructor(private readonly hangarService: HangarService) {}

@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HangarOficinaService } from './hangar-oficina.service';
 import { CreateHangarOficinaDto } from './dto/create-hangar-oficina.dto';
 import { UpdateHangarOficinaDto } from './dto/update-hangar-oficina.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Hangar oficina')
 @Controller('hangar-oficina')
 export class HangarOficinaController {
   constructor(private readonly hangarOficinaService: HangarOficinaService) {}
@@ -23,7 +33,10 @@ export class HangarOficinaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHangarOficinaDto: UpdateHangarOficinaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateHangarOficinaDto: UpdateHangarOficinaDto,
+  ) {
     return this.hangarOficinaService.update(+id, updateHangarOficinaDto);
   }
 
