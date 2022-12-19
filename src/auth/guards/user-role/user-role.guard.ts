@@ -19,7 +19,6 @@ export class UserRoleGuard implements CanActivate {
       META_ROLES,
       ctx.getHandler(),
     );
-    console.log('validRoles:', validRoles);
 
     const req = ctx.switchToHttp().getRequest();
     const user = req.user;

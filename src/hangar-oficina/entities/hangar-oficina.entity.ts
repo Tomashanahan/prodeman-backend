@@ -20,6 +20,9 @@ export class HangarOficina {
   @ApiProperty()
   AcomodarCables: string;
 
-  @ManyToOne(() => User, (user) => user.hangarOficina)
+  @ManyToOne(() => User, (user) => user.hangarOficina, {
+    cascade: true,
+    eager: true, // ⬅️ this is to get all the relations when you make a get
+  })
   user: User;
 }

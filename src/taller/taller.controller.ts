@@ -23,7 +23,7 @@ export class TallerController {
   @Post()
   @Auth()
   create(@Body() createTallerDto: CreateTallerDto, @GetUser() user: User) {
-    return this.tallerService.create(createTallerDto);
+    return this.tallerService.create(createTallerDto, user);
   }
 
   @Get()

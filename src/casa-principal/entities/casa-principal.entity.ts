@@ -28,6 +28,9 @@ export class CasaPrincipal {
   @ApiProperty()
   UPS: string;
 
-  @ManyToOne(() => User, (user) => user.casaPrincipal)
+  @ManyToOne(() => User, (user) => user.casaPrincipal, {
+    cascade: true,
+    eager: true, // ⬅️ this is to get all the relations when you make a get
+  })
   user: User;
 }

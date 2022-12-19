@@ -4,10 +4,6 @@ import { IsString } from 'class-validator';
 export class CreateBalanzaDto {
   @IsString()
   @ApiProperty()
-  preference_id: string;
-
-  @IsString()
-  @ApiProperty()
   RackPrincipalLimpieza: string;
 
   @IsString()

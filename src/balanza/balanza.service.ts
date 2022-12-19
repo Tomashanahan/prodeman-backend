@@ -29,7 +29,7 @@ export class BalanzaService {
 
   async findAll() {
     try {
-      const balanza = this.balanzaRepository.find();
+      const balanza = await this.balanzaRepository.find();
 
       if (!balanza) throw new Error();
       else {

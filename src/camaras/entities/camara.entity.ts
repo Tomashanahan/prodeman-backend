@@ -12,6 +12,9 @@ export class Camara {
   @ApiProperty()
   ChequearVisualizacion: string;
 
-  @ManyToOne(() => User, (user) => user.camara)
+  @ManyToOne(() => User, (user) => user.camara, {
+    cascade: true,
+    eager: true, // ⬅️ this is to get all the relations when you make a get
+  })
   user: User;
 }

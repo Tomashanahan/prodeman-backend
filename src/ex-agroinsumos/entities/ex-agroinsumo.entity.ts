@@ -20,6 +20,9 @@ export class ExAgroinsumo {
   @ApiProperty()
   FuncionamientoAP: string;
 
-  @ManyToOne(() => User, (user) => user.exAgroinsumo)
+  @ManyToOne(() => User, (user) => user.exAgroinsumo, {
+    cascade: true,
+    eager: true, // ⬅️ this is to get all the relations when you make a get
+  })
   user: User;
 }
