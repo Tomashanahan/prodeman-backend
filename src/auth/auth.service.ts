@@ -12,6 +12,7 @@ import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/index';
 import { JwtService } from '@nestjs/jwt';
+import { v2 } from 'cloudinary';
 
 @Injectable()
 export class AuthService {
@@ -37,6 +38,19 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto) {
     try {
+      const cloudinaryConfig = v2.config({
+        cloud_name: process.env.CLOUDNAME,
+        api_key: process.env.CLOUDAPIKEY,
+        api_secret: process.env.CLOUDINARYSECRET,
+        secure: true,
+      });
+      const timestamp = Math.round(new Date().getTime() / 1000);
+      const signature = v2.utils.api_sign_request(
+        {
+          timestamp: timestamp,
+        },
+        cloudinaryConfig.api_secret,
+      );
       const { email, password } = loginUserDto;
       const user = await this.userRepository.findOne({
         where: { email },
@@ -52,6 +66,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         token: this.getJwt({ id: user.id }),
+        cloudinaryInfo: { timestamp, signature },
       };
     } catch (error) {
       this.handleDbErrors(error);

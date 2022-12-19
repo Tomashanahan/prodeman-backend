@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAgroinsumoDto } from './dto/create-agroinsumo.dto';
 import { UpdateAgroinsumoDto } from './dto/update-agroinsumo.dto';
+import { Agroinsumo } from './entities/agroinsumo.entity';
+import { Repository } from 'typeorm';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class AgroinsumosService {
-  create(createAgroinsumoDto: CreateAgroinsumoDto) {
-    return 'This action adds a new agroinsumo';
+  private readonly logger = new Logger('AgroinsumosService');
+
+  constructor(
+    @InjectRepository(Agroinsumo)
+    private readonly agroinsumoRepository: Repository<Agroinsumo>,
+  ) {}
+
+  async create(createAgroinsumoDto: CreateAgroinsumoDto, user: User) {
+    try {
+      const agroinsumo = this.agroinsumoRepository.create({
+        ...createAgroinsumoDto,
+        user,
+      });
+
+      await this.agroinsumoRepository.save(agroinsumo);
+      return { Agroinsumos: agroinsumo };
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all agroinsumos`;
+  async findAll() {
+    try {
+      const agroinsumo = await this.agroinsumoRepository.find();
+      return agroinsumo;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} agroinsumo`;
+  async findOne(id: string) {
+    try {
+      const agroinsumo = await this.agroinsumoRepository.findOneBy({
+        preference_id: id,
+      });
+      return agroinsumo;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  update(id: number, updateAgroinsumoDto: UpdateAgroinsumoDto) {
-    return `This action updates a #${id} agroinsumo`;
-  }
+  async update(id: string, updateAgroinsumoDto: UpdateAgroinsumoDto) {
+    try {
+      const agroinsumo = await this.findOne(id);
 
-  remove(id: number) {
-    return `This action removes a #${id} agroinsumo`;
+      if (!agroinsumo) {
+        throw new Error();
+      } else {
+        return this.agroinsumoRepository.save({
+          preference_id: agroinsumo.preference_id,
+          ...updateAgroinsumoDto,
+        });
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }
