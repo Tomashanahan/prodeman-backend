@@ -11,6 +11,9 @@ import { HangarService } from './hangar.service';
 import { CreateHangarDto } from './dto/create-hangar.dto';
 import { UpdateHangarDto } from './dto/update-hangar.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorator/auth.decorator';
+import { User } from '../auth/entities/user.entity';
+import { GetUser } from 'src/auth/decorator/get-user.decorator';
 
 @ApiTags('Hangar')
 @Controller('hangar')
@@ -18,27 +21,26 @@ export class HangarController {
   constructor(private readonly hangarService: HangarService) {}
 
   @Post()
-  create(@Body() createHangarDto: CreateHangarDto) {
-    return this.hangarService.create(createHangarDto);
+  @Auth()
+  create(@Body() createHangarDto: CreateHangarDto, @GetUser() user: User) {
+    return this.hangarService.create(createHangarDto, user);
   }
 
   @Get()
+  @Auth()
   findAll() {
     return this.hangarService.findAll();
   }
 
   @Get(':id')
+  @Auth()
   findOne(@Param('id') id: string) {
-    return this.hangarService.findOne(+id);
+    return this.hangarService.findOne(id);
   }
 
   @Patch(':id')
+  @Auth()
   update(@Param('id') id: string, @Body() updateHangarDto: UpdateHangarDto) {
-    return this.hangarService.update(+id, updateHangarDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hangarService.remove(+id);
+    return this.hangarService.update(id, updateHangarDto);
   }
 }
