@@ -11,6 +11,9 @@ import { HangarOficinaService } from './hangar-oficina.service';
 import { CreateHangarOficinaDto } from './dto/create-hangar-oficina.dto';
 import { UpdateHangarOficinaDto } from './dto/update-hangar-oficina.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorator/auth.decorator';
+import { User } from '../auth/entities/user.entity';
+import { GetUser } from 'src/auth/decorator/get-user.decorator';
 
 @ApiTags('Hangar oficina')
 @Controller('hangar-oficina')
@@ -18,30 +21,32 @@ export class HangarOficinaController {
   constructor(private readonly hangarOficinaService: HangarOficinaService) {}
 
   @Post()
-  create(@Body() createHangarOficinaDto: CreateHangarOficinaDto) {
-    return this.hangarOficinaService.create(createHangarOficinaDto);
+  @Auth()
+  create(
+    @Body() createHangarOficinaDto: CreateHangarOficinaDto,
+    @GetUser() user: User,
+  ) {
+    return this.hangarOficinaService.create(createHangarOficinaDto, user);
   }
 
   @Get()
+  @Auth()
   findAll() {
     return this.hangarOficinaService.findAll();
   }
 
   @Get(':id')
+  @Auth()
   findOne(@Param('id') id: string) {
-    return this.hangarOficinaService.findOne(+id);
+    return this.hangarOficinaService.findOne(id);
   }
 
   @Patch(':id')
+  @Auth()
   update(
     @Param('id') id: string,
     @Body() updateHangarOficinaDto: UpdateHangarOficinaDto,
   ) {
-    return this.hangarOficinaService.update(+id, updateHangarOficinaDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hangarOficinaService.remove(+id);
+    return this.hangarOficinaService.update(id, updateHangarOficinaDto);
   }
 }
