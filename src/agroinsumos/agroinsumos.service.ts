@@ -23,7 +23,7 @@ export class AgroinsumosService {
       });
 
       await this.agroinsumoRepository.save(agroinsumo);
-      return { Agroinsumos: agroinsumo };
+      return agroinsumo;
     } catch (error) {
       throw new BadRequestException(error);
     }
