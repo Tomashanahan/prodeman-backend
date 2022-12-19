@@ -32,6 +32,9 @@ export class Balanza {
   @ApiProperty()
   FuncionamientoTelefono: string;
 
-  @ManyToOne(() => User, (user) => user.balanza)
+  @ManyToOne(() => User, (user) => user.balanza, {
+    cascade: true,
+    eager: true, // ⬅️ this is to get all the relations when you make a get
+  })
   user: User;
 }

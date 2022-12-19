@@ -1,26 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateBalanzaDto } from './dto/create-balanza.dto';
 import { UpdateBalanzaDto } from './dto/update-balanza.dto';
+import { User } from '../auth/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Balanza } from './entities/balanza.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BalanzaService {
-  create(createBalanzaDto: CreateBalanzaDto) {
-    return 'This action adds a new balanza';
+  constructor(
+    @InjectRepository(Balanza)
+    private readonly balanzaRepository: Repository<Balanza>,
+  ) {}
+
+  async create(createBalanzaDto: CreateBalanzaDto, user: User) {
+    try {
+      const balanza = this.balanzaRepository.create({
+        ...createBalanzaDto,
+        user,
+      });
+
+      await this.balanzaRepository.save(balanza);
+      return { Balanza: balanza };
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all balanza`;
+  async findAll() {
+    try {
+      const balanza = this.balanzaRepository.find();
+
+      if (!balanza) throw new Error();
+      else {
+        return { balanza: balanza[0] };
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} balanza`;
+  async findOne(id: string) {
+    try {
+      const balanza = this.balanzaRepository.findOneBy({ preference_id: id });
+
+      if (!balanza) throw new Error();
+      else {
+        return balanza;
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  update(id: number, updateBalanzaDto: UpdateBalanzaDto) {
-    return `This action updates a #${id} balanza`;
-  }
+  async update(id: string, updateBalanzaDto: UpdateBalanzaDto) {
+    try {
+      const balanza = await this.findOne(id);
 
-  remove(id: number) {
-    return `This action removes a #${id} balanza`;
+      if (!balanza) {
+        throw new Error();
+      } else {
+        return this.balanzaRepository.save({
+          preference_id: balanza.preference_id,
+          ...updateBalanzaDto,
+        });
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

@@ -32,7 +32,7 @@ export class AgroinsumosService {
   async findAll() {
     try {
       const agroinsumo = await this.agroinsumoRepository.find();
-      return agroinsumo;
+      return { agroinsumos: agroinsumo[0] };
     } catch (error) {
       throw new BadRequestException(error);
     }
