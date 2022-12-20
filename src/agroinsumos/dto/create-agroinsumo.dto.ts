@@ -3,6 +3,9 @@ import { IsString } from 'class-validator';
 
 export class CreateAgroinsumoDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The FuncionamientoAP name',
+    type: 'string',
+  })
   FuncionamientoAP: string;
 }

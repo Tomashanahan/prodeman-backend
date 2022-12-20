@@ -3,6 +3,9 @@ import { IsString } from 'class-validator';
 
 export class CreateCamaraDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Chequear visualizacion de la camera',
+    type: 'string',
+  })
   ChequearVisualizacion: string;
 }

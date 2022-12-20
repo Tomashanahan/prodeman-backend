@@ -12,15 +12,27 @@ import { UserTeam } from '../interfaces';
 export class CreateUserDto {
   @IsString()
   @IsEmail()
-  @ApiProperty()
+  @ApiProperty({
+    description: "The user's email address",
+    example: 'example@example.com',
+    type: 'string',
+  })
   email: string;
 
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: "The user's full name",
+    example: 'John Doe',
+    type: 'string',
+  })
   fullName: string;
 
   @IsEnum(UserTeam)
-  @ApiProperty()
+  @ApiProperty({
+    description: "The user's team",
+    example: "'Microinformatica' | 'Telecomunicaciones'",
+    type: 'string',
+  })
   team: 'Microinformatica' | 'Telecomunicaciones';
 
   @IsString()
@@ -30,6 +42,10 @@ export class CreateUserDto {
     message:
       'The password must have a Uppercase, lowercase letter and a number',
   })
-  @ApiProperty()
+  @ApiProperty({
+    description: "The user's password",
+    example: 'Password123',
+    type: 'string',
+  })
   password: string;
 }

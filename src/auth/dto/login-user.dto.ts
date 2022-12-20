@@ -10,7 +10,11 @@ import {
 export class LoginUserDto {
   @IsString()
   @IsEmail()
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description: 'Email of the user',
+    required: true,
+  })
   email: string;
 
   @IsString()
@@ -20,6 +24,11 @@ export class LoginUserDto {
     message:
       'The password must have a Uppercase, lowercase letter and a number',
   })
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description:
+      'Password of the user, must have at least 6 characters, one upercase letter, one lowercase letter and one number',
+    required: true,
+  })
   password: string;
 }
