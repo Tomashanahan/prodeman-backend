@@ -54,7 +54,13 @@ export class AuthService {
       const { email, password } = loginUserDto;
       const user = await this.userRepository.findOne({
         where: { email },
-        select: { id: true, password: true, email: true },
+        select: {
+          id: true,
+          password: true,
+          email: true,
+          rol: true,
+          team: true,
+        },
       });
 
       if (!user)
@@ -65,6 +71,8 @@ export class AuthService {
       return {
         id: user.id,
         email: user.email,
+        rol: user.rol,
+        team: user.team,
         token: this.getJwt({ id: user.id }),
         cloudinaryInfo: { timestamp, signature },
       };
