@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { HangarOficinaService } from './hangar-oficina.service';
 import { CreateHangarOficinaDto } from './dto/create-hangar-oficina.dto';
 import { UpdateHangarOficinaDto } from './dto/update-hangar-oficina.dto';
@@ -31,8 +23,8 @@ export class HangarOficinaController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.hangarOficinaService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.hangarOficinaService.findAll(user);
   }
 
   @Get(':id')

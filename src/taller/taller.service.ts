@@ -5,12 +5,14 @@ import { UpdateTallerDto } from './dto/update-taller.dto';
 import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
 import { Taller } from './entities/taller.entity';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class TallerService {
   constructor(
     @InjectRepository(Taller)
     private readonly tallerRepository: Repository<Taller>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createTallerDto: CreateTallerDto, user: User) {
@@ -27,24 +29,19 @@ export class TallerService {
     }
   }
 
-  async findAll() {
-    try {
-      const taller = await this.tallerRepository.find();
-      return { taller: taller[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const taller = await this.commonService.findAll(
+      'taller',
+      Taller,
+      user,
+      this.tallerRepository,
+    );
+    return taller;
   }
 
   async findOne(id: string) {
-    try {
-      const taller = await this.tallerRepository.findOneBy({
-        preference_id: id,
-      });
-      return taller;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const taller = await this.commonService.findOne(id, this.tallerRepository);
+    return taller;
   }
 
   async update(id: string, updateTallerDto: UpdateTallerDto) {

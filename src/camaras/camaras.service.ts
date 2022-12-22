@@ -5,12 +5,14 @@ import { UpdateCamaraDto } from './dto/update-camara.dto';
 import { Camara } from './entities/camara.entity';
 import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class CamarasService {
   constructor(
     @InjectRepository(Camara)
     private readonly camaraRepository: Repository<Camara>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createCamaraDto: CreateCamaraDto, user: User) {
@@ -27,24 +29,19 @@ export class CamarasService {
     }
   }
 
-  async findAll() {
-    try {
-      const camaras = await this.camaraRepository.find();
-      return { camaras: camaras[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const camaras = await this.commonService.findAll(
+      'camaras',
+      Camara,
+      user,
+      this.camaraRepository,
+    );
+    return camaras;
   }
 
   async findOne(id: string) {
-    try {
-      const camaras = await this.camaraRepository.findOneBy({
-        preference_id: id,
-      });
-      return camaras;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const camaras = await this.commonService.findOne(id, this.camaraRepository);
+    return camaras;
   }
 
   async update(id: string, updateCamaraDto: UpdateCamaraDto) {

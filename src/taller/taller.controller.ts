@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { TallerService } from './taller.service';
 import { CreateTallerDto } from './dto/create-taller.dto';
 import { UpdateTallerDto } from './dto/update-taller.dto';
@@ -28,8 +20,8 @@ export class TallerController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.tallerService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.tallerService.findAll(user);
   }
 
   @Get(':id')

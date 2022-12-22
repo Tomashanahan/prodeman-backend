@@ -31,8 +31,8 @@ export class CasaPrincipalController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.casaPrincipalService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.casaPrincipalService.findAll(user);
   }
 
   @Get(':id')

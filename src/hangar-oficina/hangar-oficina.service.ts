@@ -5,12 +5,14 @@ import { User } from '../auth/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HangarOficina } from './entities/hangar-oficina.entity';
 import { Repository } from 'typeorm';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class HangarOficinaService {
   constructor(
     @InjectRepository(HangarOficina)
     private readonly hangarOficinaRepository: Repository<HangarOficina>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createHangarOficinaDto: CreateHangarOficinaDto, user: User) {
@@ -27,24 +29,22 @@ export class HangarOficinaService {
     }
   }
 
-  async findAll() {
-    try {
-      const hangarOficina = await this.hangarOficinaRepository.find();
-      return { oficina: hangarOficina[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const hangarOficina = await this.commonService.findAll(
+      'hangarOficina',
+      HangarOficina,
+      user,
+      this.hangarOficinaRepository,
+    );
+    return hangarOficina;
   }
 
   async findOne(id: string) {
-    try {
-      const hangarOficina = await this.hangarOficinaRepository.findOneBy({
-        preference_id: id,
-      });
-      return hangarOficina;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const hangarOficina = await this.commonService.findOne(
+      id,
+      this.hangarOficinaRepository,
+    );
+    return hangarOficina;
   }
 
   async update(id: string, updateHangarOficinaDto: UpdateHangarOficinaDto) {

@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { ExAgroinsumosService } from './ex-agroinsumos.service';
 import { CreateExAgroinsumoDto } from './dto/create-ex-agroinsumo.dto';
 import { UpdateExAgroinsumoDto } from './dto/update-ex-agroinsumo.dto';
@@ -31,8 +23,8 @@ export class ExAgroinsumosController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.exAgroinsumosService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.exAgroinsumosService.findAll(user);
   }
 
   @Get(':id')

@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
@@ -28,8 +20,8 @@ export class CamarasController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.camarasService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.camarasService.findAll(user);
   }
 
   @Get(':id')

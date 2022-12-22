@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
@@ -13,6 +15,14 @@ import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/index';
 import { JwtService } from '@nestjs/jwt';
 import { v2 } from 'cloudinary';
+import { AgroinsumosService } from '../agroinsumos/agroinsumos.service';
+import { BalanzaService } from '../balanza/balanza.service';
+import { CamarasService } from '../camaras/camaras.service';
+import { CasaPrincipalService } from '../casa-principal/casa-principal.service';
+import { ExAgroinsumosService } from '../ex-agroinsumos/ex-agroinsumos.service';
+import { HangarService } from '../hangar/hangar.service';
+import { HangarOficinaService } from '../hangar-oficina/hangar-oficina.service';
+import { TallerService } from '../taller/taller.service';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +30,23 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+
+    @Inject(forwardRef(() => AgroinsumosService))
+    private readonly agroinsumosService: AgroinsumosService,
+    @Inject(forwardRef(() => BalanzaService))
+    private readonly balanzaService: BalanzaService,
+    @Inject(forwardRef(() => CamarasService))
+    private readonly camarasService: CamarasService,
+    @Inject(forwardRef(() => CasaPrincipalService))
+    private readonly casaPrincipalService: CasaPrincipalService,
+    @Inject(forwardRef(() => ExAgroinsumosService))
+    private readonly exAgroinsumosService: ExAgroinsumosService,
+    @Inject(forwardRef(() => HangarService))
+    private readonly hangarService: HangarService,
+    @Inject(forwardRef(() => HangarOficinaService))
+    private readonly hangarOficinaService: HangarOficinaService,
+    @Inject(forwardRef(() => TallerService))
+    private readonly tallerService: TallerService,
   ) {}
 
   async createUser(CreateUserDto: CreateUserDto) {
@@ -30,6 +57,31 @@ export class AuthService {
         id: user.id,
         email: user.email,
         token: this.getJwt({ id: user.id }),
+      };
+    } catch (error) {
+      this.handleDbErrors(error);
+    }
+  }
+
+  async userForm(user: User) {
+    try {
+      const { agroinsumos } = await this.agroinsumosService.findAll(user);
+      const { balanza } = await this.balanzaService.findAll(user);
+      const { camaras } = await this.camarasService.findAll(user);
+      const { casaPrincipal } = await this.casaPrincipalService.findAll(user);
+      const { exAgroinsumos } = await this.exAgroinsumosService.findAll(user);
+      const { hangar } = await this.hangarService.findAll(user);
+      const { oficina } = await this.hangarOficinaService.findAll(user);
+      const { taller } = await this.tallerService.findAll(user);
+      return {
+        agroinsumos,
+        balanza,
+        camaras,
+        casaPrincipal,
+        exAgroinsumos,
+        hangar,
+        oficina,
+        taller,
       };
     } catch (error) {
       this.handleDbErrors(error);
@@ -82,6 +134,10 @@ export class AuthService {
   }
 
   async checkAuthStatus(user: User) {
+    return { ...user, token: this.getJwt({ id: user.id }) };
+  }
+
+  async getAllInformation(user: User) {
     return { ...user, token: this.getJwt({ id: user.id }) };
   }
 

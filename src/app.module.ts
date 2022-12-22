@@ -10,6 +10,7 @@ import { HangarOficinaModule } from './hangar-oficina/hangar-oficina.module';
 import { HangarModule } from './hangar/hangar.module';
 import { ExAgroinsumosModule } from './ex-agroinsumos/ex-agroinsumos.module';
 import { CasaPrincipalModule } from './casa-principal/casa-principal.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CasaPrincipalModule } from './casa-principal/casa-principal.module';
     HangarModule,
     HangarOficinaModule,
     TallerModule,
+    CommonModule,
   ],
 })
 export class AppModule {}

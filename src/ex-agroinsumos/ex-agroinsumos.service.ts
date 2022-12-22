@@ -5,12 +5,14 @@ import { User } from '../auth/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExAgroinsumo } from './entities/ex-agroinsumo.entity';
 import { Repository } from 'typeorm';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class ExAgroinsumosService {
   constructor(
     @InjectRepository(ExAgroinsumo)
     private readonly exAgroinsumoRepository: Repository<ExAgroinsumo>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createExAgroinsumoDto: CreateExAgroinsumoDto, user: User) {
@@ -27,24 +29,22 @@ export class ExAgroinsumosService {
     }
   }
 
-  async findAll() {
-    try {
-      const exAgroinsumo = await this.exAgroinsumoRepository.find();
-      return { exAgroinsumos: exAgroinsumo[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const exAgroinsumo = await this.commonService.findAll(
+      'exAgroinsumo',
+      ExAgroinsumo,
+      user,
+      this.exAgroinsumoRepository,
+    );
+    return exAgroinsumo;
   }
 
   async findOne(id: string) {
-    try {
-      const exAgroinsumo = await this.exAgroinsumoRepository.findOneBy({
-        preference_id: id,
-      });
-      return exAgroinsumo;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const exAgroinsumo = await this.commonService.findOne(
+      id,
+      this.exAgroinsumoRepository,
+    );
+    return exAgroinsumo;
   }
 
   async update(id: string, updateExAgroinsumoDto: UpdateExAgroinsumoDto) {

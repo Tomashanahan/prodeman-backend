@@ -5,6 +5,7 @@ import { UpdateAgroinsumoDto } from './dto/update-agroinsumo.dto';
 import { Agroinsumo } from './entities/agroinsumo.entity';
 import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class AgroinsumosService {
@@ -13,6 +14,7 @@ export class AgroinsumosService {
   constructor(
     @InjectRepository(Agroinsumo)
     private readonly agroinsumoRepository: Repository<Agroinsumo>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createAgroinsumoDto: CreateAgroinsumoDto, user: User) {
@@ -29,24 +31,22 @@ export class AgroinsumosService {
     }
   }
 
-  async findAll() {
-    try {
-      const agroinsumo = await this.agroinsumoRepository.find();
-      return { agroinsumos: agroinsumo[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const agroinsumos = await this.commonService.findAll(
+      'agroinsumos',
+      Agroinsumo,
+      user,
+      this.agroinsumoRepository,
+    );
+    return agroinsumos;
   }
 
   async findOne(id: string) {
-    try {
-      const agroinsumo = await this.agroinsumoRepository.findOneBy({
-        preference_id: id,
-      });
-      return agroinsumo;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const agroinsumos = await this.commonService.findOne(
+      id,
+      this.agroinsumoRepository,
+    );
+    return agroinsumos;
   }
 
   async update(id: string, updateAgroinsumoDto: UpdateAgroinsumoDto) {

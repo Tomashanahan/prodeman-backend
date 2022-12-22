@@ -5,12 +5,14 @@ import { User } from '../auth/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Hangar } from './entities/hangar.entity';
 import { Repository } from 'typeorm';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class HangarService {
   constructor(
     @InjectRepository(Hangar)
     private readonly hangarRepository: Repository<Hangar>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createHangarDto: CreateHangarDto, user: User) {
@@ -27,24 +29,19 @@ export class HangarService {
     }
   }
 
-  async findAll() {
-    try {
-      const hangar = await this.hangarRepository.find();
-      return { hangar: hangar[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const hangar = await this.commonService.findAll(
+      'hangar',
+      Hangar,
+      user,
+      this.hangarRepository,
+    );
+    return hangar;
   }
 
   async findOne(id: string) {
-    try {
-      const hangar = await this.hangarRepository.findOneBy({
-        preference_id: id,
-      });
-      return hangar;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const hangar = await this.commonService.findOne(id, this.hangarRepository);
+    return hangar;
   }
 
   async update(id: string, updateHangarDto: UpdateHangarDto) {

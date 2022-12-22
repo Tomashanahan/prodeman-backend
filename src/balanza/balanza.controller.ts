@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
@@ -10,7 +19,10 @@ import { User } from '../auth/entities/user.entity';
 @ApiTags('Balanza')
 @Controller('balanza')
 export class BalanzaController {
-  constructor(private readonly balanzaService: BalanzaService) {}
+  constructor(
+    @Inject(forwardRef(() => BalanzaService))
+    private readonly balanzaService: BalanzaService,
+  ) {}
 
   @Post()
   @Auth()
@@ -22,8 +34,8 @@ export class BalanzaController {
   @Get()
   @Auth()
   @ApiProperty()
-  findAll() {
-    return this.balanzaService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.balanzaService.findAll(user);
   }
 
   @Get(':id')

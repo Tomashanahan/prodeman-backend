@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { GetUser } from 'src/auth/decorator/get-user.decorator';
@@ -10,7 +19,10 @@ import { User } from '../auth/entities/user.entity';
 @ApiTags('Agroinsumos')
 @Controller('agroinsumos')
 export class AgroinsumosController {
-  constructor(private readonly agroinsumosService: AgroinsumosService) {}
+  constructor(
+    @Inject(forwardRef(() => AgroinsumosService))
+    private readonly agroinsumosService: AgroinsumosService,
+  ) {}
 
   @Post()
   @Auth()
@@ -23,8 +35,8 @@ export class AgroinsumosController {
 
   @Get()
   @Auth()
-  findAll() {
-    return this.agroinsumosService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.agroinsumosService.findAll(user);
   }
 
   @Get(':id')

@@ -29,7 +29,7 @@ export class UserRoleGuard implements CanActivate {
 
     if (validRoles.length === 0) return true;
 
-    for (const role of user.roles) {
+    for (const role of user.rol) {
       if (validRoles.includes(role)) return true;
     }
 

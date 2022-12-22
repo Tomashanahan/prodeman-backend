@@ -5,12 +5,14 @@ import { User } from '../auth/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CasaPrincipal } from './entities/casa-principal.entity';
 import { Repository } from 'typeorm';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class CasaPrincipalService {
   constructor(
     @InjectRepository(CasaPrincipal)
     private readonly casaPrincipalRepository: Repository<CasaPrincipal>,
+    private readonly commonService: CommonService,
   ) {}
 
   async create(createCasaPrincipalDto: CreateCasaPrincipalDto, user: User) {
@@ -27,24 +29,22 @@ export class CasaPrincipalService {
     }
   }
 
-  async findAll() {
-    try {
-      const casaPrincipal = await this.casaPrincipalRepository.find();
-      return { casaPrincipal: casaPrincipal[0] };
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+  async findAll(user: User) {
+    const casaPrincipal = await this.commonService.findAll(
+      'casaPrincipal',
+      CasaPrincipal,
+      user,
+      this.casaPrincipalRepository,
+    );
+    return casaPrincipal;
   }
 
   async findOne(id: string) {
-    try {
-      const casaPrincipal = await this.casaPrincipalRepository.findOneBy({
-        preference_id: id,
-      });
-      return casaPrincipal;
-    } catch (error) {
-      throw new BadRequestException(error);
-    }
+    const casaPrincipal = await this.commonService.findOne(
+      id,
+      this.casaPrincipalRepository,
+    );
+    return casaPrincipal;
   }
 
   async update(id: string, updateCasaPrincipalDto: UpdateCasaPrincipalDto) {
