@@ -32,7 +32,6 @@ export class CasaPrincipalService {
   async findAll(user: User) {
     const casaPrincipal = await this.commonService.findAll(
       'casaPrincipal',
-      CasaPrincipal,
       user,
       this.casaPrincipalRepository,
     );

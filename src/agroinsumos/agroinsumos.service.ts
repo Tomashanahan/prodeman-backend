@@ -34,7 +34,6 @@ export class AgroinsumosService {
   async findAll(user: User) {
     const agroinsumos = await this.commonService.findAll(
       'agroinsumos',
-      Agroinsumo,
       user,
       this.agroinsumoRepository,
     );

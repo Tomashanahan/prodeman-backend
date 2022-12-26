@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeUpdate,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { User } from '../../auth/entities/user.entity';
 
 @Entity()
@@ -19,6 +26,14 @@ export class HangarOficina {
   @Column('text')
   @ApiProperty()
   AcomodarCables: string;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @BeforeUpdate()
+  update() {
+    this.updated_at = new Date();
+  }
 
   @ManyToOne(() => User, (user) => user.hangarOficina, {
     cascade: true,

@@ -1,40 +1,42 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '../auth/entities/user.entity';
+import { Repository } from 'typeorm';
+import { DomainEntity } from './common.type';
 
 @Injectable()
 export class CommonService {
   async findAll(
     nameOfTheService: string,
-    entity,
-    user: User,
-    entityRepository,
+    _user: User,
+    entityRepository: Repository<DomainEntity>,
   ) {
     try {
-      let results: typeof entity;
-      if (user.rol.includes('admin')) {
-        results = await entityRepository.find({
+      if (_user.rol.includes('admin')) {
+        const results = await entityRepository.find({
           where: {
             user: {
-              id: user.id,
+              id: _user.id,
             },
+          },
+          order: {
+            updated_at: 'DESC',
           },
         });
 
         return { [nameOfTheService]: results };
       } else {
-        results = await entityRepository.find({
+        const results = await entityRepository.find({
           where: {
             user: {
-              id: user.id,
+              id: _user.id,
             },
           },
-          select: {
-            user: false,
+          order: {
+            updated_at: 'DESC',
           },
         });
 
-        // res
-        return { [nameOfTheService]: results[0] };
+        return { [nameOfTheService]: results?.[0] };
       }
     } catch (error) {
       throw new BadRequestException(error);

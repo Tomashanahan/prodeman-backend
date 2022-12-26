@@ -32,7 +32,6 @@ export class HangarService {
   async findAll(user: User) {
     const hangar = await this.commonService.findAll(
       'hangar',
-      Hangar,
       user,
       this.hangarRepository,
     );

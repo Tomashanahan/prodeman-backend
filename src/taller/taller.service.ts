@@ -32,7 +32,6 @@ export class TallerService {
   async findAll(user: User) {
     const taller = await this.commonService.findAll(
       'taller',
-      Taller,
       user,
       this.tallerRepository,
     );

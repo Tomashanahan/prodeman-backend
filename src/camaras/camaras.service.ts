@@ -32,7 +32,6 @@ export class CamarasService {
   async findAll(user: User) {
     const camaras = await this.commonService.findAll(
       'camaras',
-      Camara,
       user,
       this.camaraRepository,
     );

@@ -36,8 +36,8 @@ export class AuthController {
 
   @Get('user-form')
   @Auth(ValidRoles.user)
-  userForm(@GetUser() user: User) {
-    return this.authService.userForm(user);
+  getUserForm(@GetUser() user: User) {
+    return this.authService.getUserForm(user);
   }
 
   @Get('get-all-information')

@@ -32,7 +32,6 @@ export class BalanzaService {
   async findAll(user: User) {
     const balanza = await this.commonService.findAll(
       'balanza',
-      Balanza,
       user,
       this.balanzaRepository,
     );

@@ -63,24 +63,25 @@ export class AuthService {
     }
   }
 
-  async userForm(user: User) {
+  async getUserForm(user: User) {
     try {
       const { agroinsumos } = await this.agroinsumosService.findAll(user);
       const { balanza } = await this.balanzaService.findAll(user);
       const { camaras } = await this.camarasService.findAll(user);
       const { casaPrincipal } = await this.casaPrincipalService.findAll(user);
-      const { exAgroinsumos } = await this.exAgroinsumosService.findAll(user);
+      const { exAgroinsumo } = await this.exAgroinsumosService.findAll(user);
       const { hangar } = await this.hangarService.findAll(user);
-      const { oficina } = await this.hangarOficinaService.findAll(user);
+      const { hangarOficina } = await this.hangarOficinaService.findAll(user);
       const { taller } = await this.tallerService.findAll(user);
+
       return {
         agroinsumos,
         balanza,
         camaras,
         casaPrincipal,
-        exAgroinsumos,
+        exAgroinsumo,
         hangar,
-        oficina,
+        hangarOficina,
         taller,
       };
     } catch (error) {
