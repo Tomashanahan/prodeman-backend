@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 import { CamarasService } from './camaras.service';
 import { CreateCamaraDto } from './dto/create-camara.dto';
 import { UpdateCamaraDto } from './dto/update-camara.dto';

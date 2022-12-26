@@ -9,8 +9,8 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 import { BalanzaService } from './balanza.service';
 import { CreateBalanzaDto } from './dto/create-balanza.dto';
 import { UpdateBalanzaDto } from './dto/update-balanza.dto';

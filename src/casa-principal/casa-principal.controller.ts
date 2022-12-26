@@ -12,8 +12,8 @@ import { CasaPrincipalService } from './casa-principal.service';
 import { CreateCasaPrincipalDto } from './dto/create-casa-principal.dto';
 import { UpdateCasaPrincipalDto } from './dto/update-casa-principal.dto';
 import { User } from '../auth/entities/user.entity';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
-import { Auth } from 'src/auth/decorator/auth.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
 
 @ApiTags('Casa principal')
 @Controller('casa-principal')

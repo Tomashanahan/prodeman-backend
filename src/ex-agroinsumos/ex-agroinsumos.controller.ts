@@ -3,8 +3,8 @@ import { ExAgroinsumosService } from './ex-agroinsumos.service';
 import { CreateExAgroinsumoDto } from './dto/create-ex-agroinsumo.dto';
 import { UpdateExAgroinsumoDto } from './dto/update-ex-agroinsumo.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 import { User } from '../auth/entities/user.entity';
 
 @ApiTags('Ex agroinsumos')

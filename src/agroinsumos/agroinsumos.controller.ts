@@ -9,8 +9,8 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 import { AgroinsumosService } from './agroinsumos.service';
 import { CreateAgroinsumoDto } from './dto/create-agroinsumo.dto';
 import { UpdateAgroinsumoDto } from './dto/update-agroinsumo.dto';

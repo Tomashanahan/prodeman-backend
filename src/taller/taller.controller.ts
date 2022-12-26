@@ -3,9 +3,9 @@ import { TallerService } from './taller.service';
 import { CreateTallerDto } from './dto/create-taller.dto';
 import { UpdateTallerDto } from './dto/update-taller.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
 import { User } from '../auth/entities/user.entity';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 
 @ApiTags('Taller')
 @Controller('taller')

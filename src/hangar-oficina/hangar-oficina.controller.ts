@@ -3,9 +3,9 @@ import { HangarOficinaService } from './hangar-oficina.service';
 import { CreateHangarOficinaDto } from './dto/create-hangar-oficina.dto';
 import { UpdateHangarOficinaDto } from './dto/update-hangar-oficina.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorator/auth.decorator';
+import { Auth } from '../auth/decorator/auth.decorator';
 import { User } from '../auth/entities/user.entity';
-import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { GetUser } from '../auth/decorator/get-user.decorator';
 
 @ApiTags('Hangar oficina')
 @Controller('hangar-oficina')
