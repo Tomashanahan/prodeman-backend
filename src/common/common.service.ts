@@ -5,11 +5,7 @@ import { DomainEntity } from './common.type';
 
 @Injectable()
 export class CommonService {
-  async findAll(
-    nameOfTheService: string,
-    _user: User,
-    entityRepository: Repository<DomainEntity>,
-  ) {
+  async findAll(nameOfTheService: string, _user: User, entityRepository: Repository<DomainEntity>) {
     try {
       if (_user.rol.includes('admin')) {
         const results = await entityRepository.find({
@@ -45,8 +41,8 @@ export class CommonService {
 
   async findOne(id: string, entityRepository) {
     try {
-      const result = await entityRepository.findOneBy({
-        preference_id: id,
+      const result = await entityRepository.findOne({
+        where: { preference_id: id },
       });
       return result;
     } catch (error) {
