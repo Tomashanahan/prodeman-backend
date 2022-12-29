@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CasaPrincipalService } from './casa-principal.service';
 import { CreateCasaPrincipalDto } from './dto/create-casa-principal.dto';
@@ -22,10 +14,7 @@ export class CasaPrincipalController {
 
   @Post()
   @Auth()
-  create(
-    @Body() createCasaPrincipalDto: CreateCasaPrincipalDto,
-    @GetUser() user: User,
-  ) {
+  create(@Body() createCasaPrincipalDto: CreateCasaPrincipalDto, @GetUser() user: User) {
     return this.casaPrincipalService.create(createCasaPrincipalDto, user);
   }
 
@@ -43,10 +32,7 @@ export class CasaPrincipalController {
 
   @Patch(':id')
   @Auth()
-  update(
-    @Param('id') id: string,
-    @Body() updateCasaPrincipalDto: UpdateCasaPrincipalDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateCasaPrincipalDto: UpdateCasaPrincipalDto) {
     return this.casaPrincipalService.update(id, updateCasaPrincipalDto);
   }
 }

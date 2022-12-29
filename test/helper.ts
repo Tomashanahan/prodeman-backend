@@ -26,16 +26,6 @@ export const _getConnection = async () => {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     synchronize: true,
-    entities: [
-      User,
-      Agroinsumo,
-      Balanza,
-      Camara,
-      Taller,
-      HangarOficina,
-      Hangar,
-      ExAgroinsumo,
-      CasaPrincipal,
-    ],
+    entities: [User, Agroinsumo, Balanza, Camara, Taller, HangarOficina, Hangar, ExAgroinsumo, CasaPrincipal],
   });
 };

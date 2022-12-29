@@ -9,11 +9,7 @@ import { CommonModule } from '../common/common.module';
 @Module({
   controllers: [CasaPrincipalController],
   providers: [CasaPrincipalService],
-  imports: [
-    TypeOrmModule.forFeature([CasaPrincipal]),
-    forwardRef(() => AuthModule),
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([CasaPrincipal]), forwardRef(() => AuthModule), CommonModule],
   exports: [TypeOrmModule, CasaPrincipalService],
 })
 export class CasaPrincipalModule {}

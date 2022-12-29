@@ -30,19 +30,12 @@ export class HangarOficinaService {
   }
 
   async findAll(user: User) {
-    const hangarOficina = await this.commonService.findAll(
-      'hangarOficina',
-      user,
-      this.hangarOficinaRepository,
-    );
+    const hangarOficina = await this.commonService.findAll('hangarOficina', user, this.hangarOficinaRepository);
     return hangarOficina;
   }
 
   async findOne(id: string) {
-    const hangarOficina = await this.commonService.findOne(
-      id,
-      this.hangarOficinaRepository,
-    );
+    const hangarOficina = await this.commonService.findOne(id, this.hangarOficinaRepository);
     return hangarOficina;
   }
 

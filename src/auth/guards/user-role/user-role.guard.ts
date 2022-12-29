@@ -12,13 +12,8 @@ import { META_ROLES } from '../../decorator/role-protector.decorator';
 @Injectable()
 export class UserRoleGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
-  canActivate(
-    ctx: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const validRoles: string[] = this.reflector.get(
-      META_ROLES,
-      ctx.getHandler(),
-    );
+  canActivate(ctx: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    const validRoles: string[] = this.reflector.get(META_ROLES, ctx.getHandler());
 
     const req = ctx.switchToHttp().getRequest();
     const user = req.user;
@@ -33,8 +28,6 @@ export class UserRoleGuard implements CanActivate {
       if (validRoles.includes(role)) return true;
     }
 
-    throw new ForbiddenException(
-      `User ${user.fullName} need a valid rol [${[validRoles]}]`,
-    );
+    throw new ForbiddenException(`User ${user.fullName} need a valid rol [${[validRoles]}]`);
   }
 }

@@ -30,19 +30,12 @@ export class BalanzaService {
   }
 
   async findAll(user: User) {
-    const balanza = await this.commonService.findAll(
-      'balanza',
-      user,
-      this.balanzaRepository,
-    );
+    const balanza = await this.commonService.findAll('balanza', user, this.balanzaRepository);
     return balanza;
   }
 
   async findOne(id: string) {
-    const balanza = await this.commonService.findOne(
-      id,
-      this.balanzaRepository,
-    );
+    const balanza = await this.commonService.findOne(id, this.balanzaRepository);
     return balanza;
   }
 

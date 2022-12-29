@@ -9,11 +9,7 @@ import { CommonModule } from '../common/common.module';
 @Module({
   controllers: [ExAgroinsumosController],
   providers: [ExAgroinsumosService],
-  imports: [
-    TypeOrmModule.forFeature([ExAgroinsumo]),
-    forwardRef(() => AuthModule),
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([ExAgroinsumo]), forwardRef(() => AuthModule), CommonModule],
   exports: [TypeOrmModule, ExAgroinsumosService],
 })
 export class ExAgroinsumosModule {}

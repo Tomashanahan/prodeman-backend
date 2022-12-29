@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Inject,
-  forwardRef,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Inject, forwardRef } from '@nestjs/common';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorator/auth.decorator';
 import { GetUser } from '../auth/decorator/get-user.decorator';

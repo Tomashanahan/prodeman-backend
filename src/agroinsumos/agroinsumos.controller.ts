@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Inject,
-  forwardRef,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Inject, forwardRef } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth } from '../auth/decorator/auth.decorator';
 import { GetUser } from '../auth/decorator/get-user.decorator';
@@ -26,10 +17,7 @@ export class AgroinsumosController {
 
   @Post()
   @Auth()
-  create(
-    @Body() createAgroinsumoDto: CreateAgroinsumoDto,
-    @GetUser() user: User,
-  ) {
+  create(@Body() createAgroinsumoDto: CreateAgroinsumoDto, @GetUser() user: User) {
     return this.agroinsumosService.create(createAgroinsumoDto, user);
   }
 
@@ -47,10 +35,7 @@ export class AgroinsumosController {
 
   @Patch(':id')
   @Auth()
-  update(
-    @Param('id') id: string,
-    @Body() updateAgroinsumoDto: UpdateAgroinsumoDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateAgroinsumoDto: UpdateAgroinsumoDto) {
     return this.agroinsumosService.update(id, updateAgroinsumoDto);
   }
 }

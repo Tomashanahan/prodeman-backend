@@ -9,11 +9,6 @@ export class CommonService {
     try {
       if (_user.rol.includes('admin')) {
         const results = await entityRepository.find({
-          where: {
-            user: {
-              id: _user.id,
-            },
-          },
           order: {
             updated_at: 'DESC',
           },

@@ -1,4 +1,11 @@
-import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginUserDto } from './dto';
@@ -110,7 +117,8 @@ export class AuthService {
       });
 
       if (!user) throw new UnauthorizedException(`Credentials are not valid (email)`);
-      if (!bcrypt.compareSync(password, user.password)) throw new UnauthorizedException(`Credentials are not valid (password)`);
+      if (!bcrypt.compareSync(password, user.password))
+        throw new UnauthorizedException(`Credentials are not valid (password)`);
 
       return {
         id: user.id,
@@ -130,7 +138,8 @@ export class AuthService {
   }
 
   async getAllInformation(user: User) {
-    return { ...user, token: this.getJwt({ id: user.id }) };
+    return this.getUserForm(user);
+    // return { ...user, token: this.getJwt({ id: user.id }) };
   }
 
   private getJwt(payload: JwtPayload) {

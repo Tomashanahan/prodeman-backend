@@ -14,10 +14,7 @@ export class HangarOficinaController {
 
   @Post()
   @Auth()
-  create(
-    @Body() createHangarOficinaDto: CreateHangarOficinaDto,
-    @GetUser() user: User,
-  ) {
+  create(@Body() createHangarOficinaDto: CreateHangarOficinaDto, @GetUser() user: User) {
     return this.hangarOficinaService.create(createHangarOficinaDto, user);
   }
 
@@ -35,10 +32,7 @@ export class HangarOficinaController {
 
   @Patch(':id')
   @Auth()
-  update(
-    @Param('id') id: string,
-    @Body() updateHangarOficinaDto: UpdateHangarOficinaDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateHangarOficinaDto: UpdateHangarOficinaDto) {
     return this.hangarOficinaService.update(id, updateHangarOficinaDto);
   }
 }

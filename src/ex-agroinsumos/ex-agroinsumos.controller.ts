@@ -14,10 +14,7 @@ export class ExAgroinsumosController {
 
   @Post()
   @Auth()
-  create(
-    @Body() createExAgroinsumoDto: CreateExAgroinsumoDto,
-    @GetUser() user: User,
-  ) {
+  create(@Body() createExAgroinsumoDto: CreateExAgroinsumoDto, @GetUser() user: User) {
     return this.exAgroinsumosService.create(createExAgroinsumoDto, user);
   }
 
@@ -35,10 +32,7 @@ export class ExAgroinsumosController {
 
   @Patch(':id')
   @Auth()
-  update(
-    @Param('id') id: string,
-    @Body() updateExAgroinsumoDto: UpdateExAgroinsumoDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateExAgroinsumoDto: UpdateExAgroinsumoDto) {
     return this.exAgroinsumosService.update(id, updateExAgroinsumoDto);
   }
 }

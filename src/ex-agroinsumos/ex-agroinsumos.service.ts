@@ -30,19 +30,12 @@ export class ExAgroinsumosService {
   }
 
   async findAll(user: User) {
-    const exAgroinsumo = await this.commonService.findAll(
-      'exAgroinsumo',
-      user,
-      this.exAgroinsumoRepository,
-    );
+    const exAgroinsumo = await this.commonService.findAll('exAgroinsumo', user, this.exAgroinsumoRepository);
     return exAgroinsumo;
   }
 
   async findOne(id: string) {
-    const exAgroinsumo = await this.commonService.findOne(
-      id,
-      this.exAgroinsumoRepository,
-    );
+    const exAgroinsumo = await this.commonService.findOne(id, this.exAgroinsumoRepository);
     return exAgroinsumo;
   }
 

@@ -9,11 +9,7 @@ import { CommonModule } from '../common/common.module';
 @Module({
   controllers: [BalanzaController],
   providers: [BalanzaService],
-  imports: [
-    TypeOrmModule.forFeature([Balanza]),
-    forwardRef(() => AuthModule),
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Balanza]), forwardRef(() => AuthModule), CommonModule],
   exports: [TypeOrmModule, BalanzaService],
 })
 export class BalanzaModule {}

@@ -3,8 +3,7 @@ import { IsString } from 'class-validator';
 
 export class CreateCasaPrincipalDto {
   @ApiProperty({
-    description:
-      'RackPrincipalLimpieza - Rack principal de la casa para limpieza',
+    description: 'RackPrincipalLimpieza - Rack principal de la casa para limpieza',
     type: 'string',
   })
   @IsString()
@@ -25,8 +24,7 @@ export class CreateCasaPrincipalDto {
   FuncionamientoAP: string;
 
   @ApiProperty({
-    description:
-      'FuncionamientoTelefono - El funcionamiento del teléfono en la casa',
+    description: 'FuncionamientoTelefono - El funcionamiento del teléfono en la casa',
     type: 'string',
   })
   @IsString()

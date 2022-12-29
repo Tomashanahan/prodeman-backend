@@ -30,19 +30,12 @@ export class CasaPrincipalService {
   }
 
   async findAll(user: User) {
-    const casaPrincipal = await this.commonService.findAll(
-      'casaPrincipal',
-      user,
-      this.casaPrincipalRepository,
-    );
+    const casaPrincipal = await this.commonService.findAll('casaPrincipal', user, this.casaPrincipalRepository);
     return casaPrincipal;
   }
 
   async findOne(id: string) {
-    const casaPrincipal = await this.commonService.findOne(
-      id,
-      this.casaPrincipalRepository,
-    );
+    const casaPrincipal = await this.commonService.findOne(id, this.casaPrincipalRepository);
     return casaPrincipal;
   }
 
