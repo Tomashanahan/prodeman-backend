@@ -1,4 +1,3 @@
-import * as request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { User } from '../src/auth/entities/user.entity';
 import { Agroinsumo } from '../src/agroinsumos/entities/agroinsumo.entity';
