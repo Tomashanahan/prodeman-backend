@@ -65,9 +65,7 @@ describe('AgroinsumoController (e2e)', () => {
   });
 
   afterAll((done) => {
-    if (connection) {
-      connection.close().then(() => app.close());
-    }
+    app.close();
     done();
   });
 
